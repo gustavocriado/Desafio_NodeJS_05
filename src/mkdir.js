@@ -1,16 +1,18 @@
 const fs = require('fs')
-var file = require('./writeFile.js')
+const { resolve } = require('path')
 
-function make(dir, final){
-    dir.forEach((item) => {
-        fs.mkdir(`projeto/arquivos/${item}`,{recursive:true},(err) => {
-            if(err) throw err
-            console.log('diretorio criado com sucesso:', item)
-        })
+
+function make(dir){
+    return new Promise((resolve, reject) => {
+        dir.forEach((item) => {
+            fs.mkdir(`projeto/arquivos/${item}`,{recursive:true},(err) => {
+                if(err) return reject(err)
+                resolve();
+            });
+        });
     })
-    
-    file('projeto/arquivos/csv',final)
 }
+
 
 module.exports = make;
 

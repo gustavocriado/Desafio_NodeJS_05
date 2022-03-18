@@ -31,7 +31,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 var readlineSync = require('readline-sync');
-var criarCsv = require('./mkdir.js')
+var criarDiretorio = require('./mkdir.js')
+var CriarCsv = require('./writeFile.js')
 
 /**
  * Server Activation
@@ -39,14 +40,13 @@ var criarCsv = require('./mkdir.js')
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}`);
+	criarDiretorio(['csv'])
 
 	console.log('Bem vindo ao sistema das notinhas mil grau');
 
 	let alunos = [] as Aluno[]
-
-	for(var i = 1; i <= 2; i++)
+	for(var i = 1; i <= 3; i++)
 	{
-		
 		var NomeAluno = readlineSync.question('Digite o Nome do Aluno: ');
 		var IdadeAluno = readlineSync.question('Digite o Idade do Aluno: ');
 		var NotaAluno = readlineSync.question('Digite o Nota do Aluno: ');
@@ -63,6 +63,6 @@ app.listen(PORT, () => {
 		final += aluno.nota + ';' + '\r\n'
 	})
 	final += 'total notas;' + somaDasNotas.toString()
-
-	criarCsv(['csv'], final)
+	CriarCsv('projeto/arquivos/csv',final)
+	
 });
